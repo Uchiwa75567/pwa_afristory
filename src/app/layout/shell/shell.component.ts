@@ -112,8 +112,8 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
               <div>
                 <strong>Ouvre le menu du navigateur</strong>
                 <p>
-                  Sur Android, touche le menu <span class="mono">⋮</span>. Sur iPhone, touche le bouton
-                  <span class="mono">Partager</span>.
+                  Sur Android, touche le menu <span class="mono">⋮</span> ou l'icône d'installation
+                  près de la barre d'adresse. Sur iPhone, touche le bouton <span class="mono">Partager</span>.
                 </p>
               </div>
             </article>
@@ -121,10 +121,11 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
             <article class="install-step">
               <span class="install-step-index">2</span>
               <div>
-                <strong>Choisis l'option d'installation</strong>
+                <strong>Cherche l'option d'installation</strong>
                 <p>
-                  Sélectionne <span class="mono">Installer l'application</span> sur Android ou
-                  <span class="mono">Sur l'écran d'accueil</span> sur iPhone.
+                  Cherche un libellé comme <span class="mono">Installer l'application</span>,
+                  <span class="mono">Installer</span> ou <span class="mono">Ajouter à l'écran d'accueil</span>.
+                  Si elle n'apparaît pas, recharge la page après quelques secondes.
                 </p>
               </div>
             </article>
