@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { NetworkService } from '../../core/network.service';
@@ -72,19 +72,74 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         </section>
       }
 
-      @if (pwa.installable()) {
-        <button class="install-fab panel" type="button" (click)="install()" aria-label="Installer AFRISTORY">
+      @if (!pwa.standalone()) {
+        <button
+          class="install-fab panel"
+          type="button"
+          (click)="handleInstall()"
+          aria-label="Installer AFRISTORY"
+        >
           <span class="install-fab-icon">
             <app-ui-icon name="install" [size]="20" />
           </span>
 
           <span class="install-fab-copy">
-            <strong>Installer l'app</strong>
-            <small>Ajoute AFRISTORY à ton écran d'accueil pour l'ouvrir comme une vraie app.</small>
+            <strong>{{ installButtonLabel }}</strong>
+            <small>{{ installButtonHint }}</small>
           </span>
 
           <span class="install-fab-tag">PWA</span>
         </button>
+      }
+
+      @if (installHelpOpen()) {
+        <button class="install-backdrop" type="button" aria-label="Fermer l'aide d'installation" (click)="closeInstallHelp()"></button>
+
+        <section class="container install-sheet panel" role="dialog" aria-modal="true" aria-labelledby="install-sheet-title">
+          <div class="install-sheet-head">
+            <div>
+              <p class="eyebrow">Installer AFRISTORY</p>
+              <h2 id="install-sheet-title">Ajoute l'application à ton écran d'accueil</h2>
+            </div>
+            <button class="button ghost small" type="button" (click)="closeInstallHelp()">
+              Fermer
+            </button>
+          </div>
+
+          <div class="install-sheet-grid">
+            <article class="install-step">
+              <span class="install-step-index">1</span>
+              <div>
+                <strong>Ouvre le menu du navigateur</strong>
+                <p>
+                  Sur Android, touche le menu <span class="mono">⋮</span>. Sur iPhone, touche le bouton
+                  <span class="mono">Partager</span>.
+                </p>
+              </div>
+            </article>
+
+            <article class="install-step">
+              <span class="install-step-index">2</span>
+              <div>
+                <strong>Choisis l'option d'installation</strong>
+                <p>
+                  Sélectionne <span class="mono">Installer l'application</span> sur Android ou
+                  <span class="mono">Sur l'écran d'accueil</span> sur iPhone.
+                </p>
+              </div>
+            </article>
+
+            <article class="install-step">
+              <span class="install-step-index">3</span>
+              <div>
+                <strong>Confirme</strong>
+                <p>
+                  L'app s'ouvrira ensuite comme une vraie application, en plein écran, avec le cache PWA.
+                </p>
+              </div>
+            </article>
+          </div>
+        </section>
       }
 
       <main class="container shell-main">
@@ -334,6 +389,78 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         letter-spacing: 0.08em;
       }
 
+      .install-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 24;
+        border: 0;
+        background: rgba(10, 17, 40, 0.34);
+        backdrop-filter: blur(4px);
+      }
+
+      .install-sheet {
+        position: fixed;
+        left: 50%;
+        bottom: calc(7.8rem + env(safe-area-inset-bottom));
+        z-index: 25;
+        width: min(36rem, calc(100vw - 1rem));
+        transform: translateX(-50%);
+        padding: 1rem;
+        display: grid;
+        gap: 0.95rem;
+        box-shadow: 0 28px 70px rgba(2, 8, 18, 0.24);
+      }
+
+      .install-sheet-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 0.75rem;
+      }
+
+      .install-sheet-head h2 {
+        margin: 0.15rem 0 0;
+        font-size: 1.15rem;
+        letter-spacing: -0.04em;
+      }
+
+      .install-sheet-grid {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .install-step {
+        display: flex;
+        gap: 0.75rem;
+        padding: 0.85rem;
+        border-radius: 18px;
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+      }
+
+      .install-step p {
+        margin: 0.25rem 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .install-step-index {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        flex: none;
+        background: rgba(255, 107, 0, 0.12);
+        color: var(--brand-orange);
+        font-weight: 900;
+      }
+
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
       @keyframes install-fab-enter {
         from {
           opacity: 0;
@@ -389,9 +516,18 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       }
 
       .dock-link span {
-        font-size: 0.72rem;
+        display: -webkit-box;
+        max-width: 100%;
+        font-size: 0.68rem;
         font-weight: 800;
         letter-spacing: 0.02em;
+        line-height: 1.05;
+        text-align: center;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
       }
 
       @media (max-width: 900px) {
@@ -434,20 +570,49 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         .install-fab-copy small {
           display: none;
         }
+
+        .install-sheet {
+          bottom: calc(7.1rem + env(safe-area-inset-bottom));
+        }
       }
     `,
   ],
 })
 export class ShellComponent {
+  readonly installHelpOpen = signal(false);
   readonly avatarFallback = avatarUrl;
   readonly navItems = [
     { label: 'Fil', route: '/app/feed', icon: 'home', exact: true },
     { label: 'Sport', route: '/app/sports', icon: 'sports', exact: true },
     { label: 'Culture', route: '/app/culture', icon: 'culture', exact: true },
-    { label: 'Récompenses', route: '/app/rewards', icon: 'rewards', exact: true },
+    { label: 'Récomp.', route: '/app/rewards', icon: 'rewards', exact: true },
     { label: 'Explorer', route: '/app/explore', icon: 'explore', exact: true },
     { label: 'Profil', route: '/app/profile', icon: 'profile', exact: true },
   ];
+
+  get installButtonLabel(): string {
+    if (this.pwa.installable()) {
+      return "Installer l'app";
+    }
+
+    if (this.pwa.ios()) {
+      return "Ajouter à l'écran";
+    }
+
+    return 'Guide d’installation';
+  }
+
+  get installButtonHint(): string {
+    if (this.pwa.installable()) {
+      return 'Ouvre la fenêtre d’installation du navigateur.';
+    }
+
+    if (this.pwa.ios()) {
+      return 'Sur iPhone, il faut passer par le bouton Partager.';
+    }
+
+    return 'Ouvre les étapes d’installation pour ton navigateur.';
+  }
 
   constructor(
     public readonly auth: AuthService,
@@ -455,8 +620,21 @@ export class ShellComponent {
     public readonly pwa: PwaService,
     private readonly router: Router,
   ) {}
-  install(): void {
-    void this.pwa.install();
+
+  async handleInstall(): Promise<void> {
+    if (this.pwa.installable()) {
+      const accepted = await this.pwa.install();
+      if (accepted) {
+        this.installHelpOpen.set(false);
+      }
+      return;
+    }
+
+    this.installHelpOpen.set(true);
+  }
+
+  closeInstallHelp(): void {
+    this.installHelpOpen.set(false);
   }
 
   logout(): void {
