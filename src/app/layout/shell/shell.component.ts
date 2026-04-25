@@ -40,13 +40,6 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
             {{ network.statusLabel() }}
           </span>
 
-          @if (pwa.installable()) {
-            <button class="button secondary small" type="button" (click)="install()">
-              <app-ui-icon name="install" [size]="16" />
-              Installer
-            </button>
-          }
-
           @if (auth.currentUser(); as user) {
             <span class="user-chip">
               <img class="avatar sm" [src]="user.avatarUrl || avatarFallback(user.name)" [alt]="user.name">
@@ -77,6 +70,21 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
             <p>Le front continue d’afficher les contenus déjà visités grâce au cache PWA.</p>
           </div>
         </section>
+      }
+
+      @if (pwa.installable()) {
+        <button class="install-fab panel" type="button" (click)="install()" aria-label="Installer AFRISTORY">
+          <span class="install-fab-icon">
+            <app-ui-icon name="install" [size]="20" />
+          </span>
+
+          <span class="install-fab-copy">
+            <strong>Installer l'app</strong>
+            <small>Ajoute AFRISTORY à ton écran d'accueil pour l'ouvrir comme une vraie app.</small>
+          </span>
+
+          <span class="install-fab-tag">PWA</span>
+        </button>
       }
 
       <main class="container shell-main">
@@ -260,6 +268,83 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         color: var(--muted);
       }
 
+      .install-fab {
+        position: fixed;
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: calc(6.55rem + env(safe-area-inset-bottom));
+        z-index: 25;
+        width: min(24rem, calc(100vw - 1.5rem));
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.95rem 1rem;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 107, 0, 0.18);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 248, 240, 0.96)),
+          var(--surface-strong);
+        box-shadow:
+          0 24px 50px rgba(10, 17, 40, 0.16),
+          0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+        text-align: left;
+        animation: install-fab-enter 260ms ease-out;
+      }
+
+      .install-fab:hover {
+        transform: translateY(-2px);
+      }
+
+      .install-fab-icon {
+        width: 2.35rem;
+        height: 2.35rem;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        flex: none;
+        color: #ff6b00;
+        background: rgba(255, 107, 0, 0.12);
+      }
+
+      .install-fab-copy {
+        min-width: 0;
+        display: grid;
+        gap: 0.15rem;
+        flex: 1;
+      }
+
+      .install-fab-copy strong {
+        font-size: 0.95rem;
+        letter-spacing: -0.02em;
+      }
+
+      .install-fab-copy small {
+        color: var(--muted);
+        line-height: 1.4;
+      }
+
+      .install-fab-tag {
+        flex: none;
+        align-self: flex-start;
+        padding: 0.4rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(0, 168, 89, 0.12);
+        color: #007844;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+      }
+
+      @keyframes install-fab-enter {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
       .shell-main {
         position: relative;
         z-index: 1;
@@ -322,6 +407,13 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         .top-actions {
           justify-content: flex-start;
         }
+
+        .install-fab {
+          left: 50%;
+          right: auto;
+          width: min(26rem, calc(100vw - 1rem));
+          transform: translateX(-50%);
+        }
       }
 
       @media (max-width: 640px) {
@@ -331,6 +423,16 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
 
         .dock-link {
           padding: 0.7rem 0.25rem;
+        }
+
+        .install-fab {
+          bottom: calc(6.15rem + env(safe-area-inset-bottom));
+          gap: 0.75rem;
+          padding: 0.85rem 0.9rem;
+        }
+
+        .install-fab-copy small {
+          display: none;
         }
       }
     `,
