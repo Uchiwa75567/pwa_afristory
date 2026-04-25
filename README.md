@@ -53,7 +53,7 @@ Avec ce repo, le plus propre est de déployer un seul **Web Service** Render:
    - `JWT_SECRET` si tu veux imposer un secret fixe, sinon Render en génère un
    - `NODE_ENV=production`
 4. Laisse ces commandes:
-   - Build: `npm ci && npm run build`
+   - Build: `npm ci --include=dev && npm run build`
    - Start: `npm run start:backend:prod`
 5. Déploie.
 
@@ -65,7 +65,7 @@ Si tu préfères tout configurer à la main dans le dashboard Render:
 
 - Type: `Web Service`
 - Runtime: `Node`
-- Build Command: `npm ci && npm run build`
+- Build Command: `npm ci --include=dev && npm run build`
 - Start Command: `npm run start:backend:prod`
 - Health Check Path: `/api/health`
 - Environment Variables:
