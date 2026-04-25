@@ -1,0 +1,23 @@
+[
+  {
+    "id": "d50cedc2-5451-463d-b056-aa5471444d83",
+    "name": "Awa Diop",
+    "handle": "@awa.diop",
+    "email": "demo@afristory.app",
+    "passwordHash": "$2b$10$vo8Xcjd30OjBrYunHYLwVev74XZTEchqeHdIU69MbhP8HL.PyX5v.",
+    "country": "Sénégal",
+    "bio": "Supporter JOJ Dakar 2026, créatrice de contenu et ambassadrice de la culture africaine.",
+    "avatarSeed": "Awa Diop",
+    "points": 320,
+    "streak": 7,
+    "followers": 1240,
+    "following": 168,
+    "badges": [
+      "Ambassadeur JOJ",
+      "Explorateur Dakar",
+      "Créateur actif"
+    ],
+    "joinedAt": "2026-04-25T16:55:46.808Z",
+    "updatedAt": "2026-04-25T16:55:46.808Z"
+  }
+]

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: afristory
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:backend:prod
+    autoDeploy: true
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false

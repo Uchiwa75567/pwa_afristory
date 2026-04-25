@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AFRISTORY">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A1128"/>
+      <stop offset="55%" stop-color="#13284a"/>
+      <stop offset="100%" stop-color="#07111d"/>
+    </linearGradient>
+    <linearGradient id="a" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B00"/>
+      <stop offset="52%" stop-color="#FFC800"/>
+      <stop offset="100%" stop-color="#00A859"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#g)"/>
+  <circle cx="19" cy="22" r="7.5" fill="url(#a)"/>
+  <path d="M14 44.5L27.5 17h9L50 44.5h-7.2l-2.3-5.2H23.5l-2.3 5.2H14zm13.6-10.8h8.8L32 22.5l-4.4 11.2z" fill="#F5FAFF"/>
+  <path d="M12.5 50.5h39" stroke="rgba(255,255,255,0.2)" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

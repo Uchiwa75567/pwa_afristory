@@ -1,0 +1,114 @@
+{
+  "configVersion": 1,
+  "timestamp": 1777141929413,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app-shell",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk-4EI2IDZT.js",
+        "/chunk-576M7XBT.js",
+        "/chunk-5O7NV7DF.js",
+        "/chunk-ALHSJCPG.js",
+        "/chunk-ETNUKACY.js",
+        "/chunk-EZE5BQ5C.js",
+        "/chunk-FIGD7RO4.js",
+        "/chunk-IJMVUWM6.js",
+        "/chunk-INLP2CTH.js",
+        "/chunk-JLV2XZE7.js",
+        "/chunk-KGHFZIGK.js",
+        "/chunk-NJNJX3NQ.js",
+        "/chunk-RPYD73ZC.js",
+        "/chunk-Y6OUWJLK.js",
+        "/favicon.svg",
+        "/index.html",
+        "/main-X4GY5TU7.js",
+        "/manifest.webmanifest",
+        "/polyfills-5CFQRCPP.js",
+        "/styles-2SWYOP3U.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/icons/apple-touch-icon.png",
+        "/assets/icons/icon-192.png",
+        "/assets/icons/icon-512.png",
+        "/assets/image-removebg-preview (5).png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "afristory-api",
+      "patterns": [
+        "\\/api\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 20,
+      "maxAge": 7200000,
+      "timeoutMs": 6000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/assets/icons/apple-touch-icon.png": "72292012b67a6553e1828f3b9c9ac52627946445",
+    "/assets/icons/icon-192.png": "9e189796082bcda92e3c039aa7832fe1414bcc90",
+    "/assets/icons/icon-512.png": "16251d6a6173129f6e4a84b5b61e29201c159081",
+    "/assets/image-removebg-preview (5).png": "4c6955787653419000d0e02b0e426e5097651549",
+    "/chunk-4EI2IDZT.js": "03e52a1721b46836e17ebcea36ddc1d804b4f693",
+    "/chunk-576M7XBT.js": "67e5014c51d817227163c2a03b9204edf0a677d6",
+    "/chunk-5O7NV7DF.js": "0be986c2eb9e4544925bb9b0df07f9450a1400a4",
+    "/chunk-ALHSJCPG.js": "9283b8f2596a3ade7eb6041bdac367204960d724",
+    "/chunk-ETNUKACY.js": "2cf088f8c26b4fcb4a90adb6f04053ba0b40b588",
+    "/chunk-EZE5BQ5C.js": "7307c768d7b4de8a71155bb60a2179cdcfb3ea11",
+    "/chunk-FIGD7RO4.js": "e56f8404d5e29d30bb6f703be985d1c66b4e8d2e",
+    "/chunk-IJMVUWM6.js": "100ac46d12a5ca6d4ce6baf95be1177ed7bc41b5",
+    "/chunk-INLP2CTH.js": "0fbd5a54c12c7b128692efc7b15021b93e72b260",
+    "/chunk-JLV2XZE7.js": "714ed7176a54d16d642f09d250f32a85d2637012",
+    "/chunk-KGHFZIGK.js": "6f147bd3c7857054b36e0afd556152a5db873038",
+    "/chunk-NJNJX3NQ.js": "4778916818e6ef8d3d82426c189c694d50437a91",
+    "/chunk-RPYD73ZC.js": "38dd041257bf50525e682f91a5634b525824cb1b",
+    "/chunk-Y6OUWJLK.js": "b9184c593d7db756bcdd3e22ea53c35964a9c9c8",
+    "/favicon.svg": "a228fa6622c449591a42400b74c88c621c0d56f5",
+    "/index.html": "435ea698b45d5b5900c62e5700248d004532a1dc",
+    "/main-X4GY5TU7.js": "234c73fe01961c439b604c66f1e8bb4b122d81a3",
+    "/manifest.webmanifest": "2bd0d461f14a39bc40708fee574e353180321456",
+    "/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "/styles-2SWYOP3U.css": "1c382507bc3c6556b9ccdc69a5c841a4cc20b0b5"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
