@@ -17,49 +17,65 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       <div class="shell-aurora shell-aurora-green"></div>
 
       <header class="container shell-top panel">
-        <div class="brand-block">
-          <img
-            class="brand-logo"
-            src="/assets/image-removebg-preview%20(5).png"
-            alt="Logo AFRISTORY"
-            width="168"
-            height="56"
-            loading="eager"
-          >
+        <div class="shell-top-main">
+          <div class="brand-block">
+            <img
+              class="brand-logo"
+              src="/assets/image-removebg-preview%20(5).png"
+              alt="Logo AFRISTORY"
+              width="168"
+              height="56"
+              loading="eager"
+            >
 
-          <div class="brand-copy">
-            <p class="eyebrow">JOJ Dakar 2026</p>
-            <h1>Sport, culture, communauté</h1>
-            <p>Une expérience mobile pensée pour vibrer autour des JOJ et raconter l’Afrique.</p>
+            <div class="brand-copy">
+              <p class="eyebrow">JOJ Dakar 2026</p>
+              <h1>Sport, culture, communauté</h1>
+              <p>Une expérience mobile pensée pour vibrer autour des JOJ et raconter l’Afrique.</p>
+            </div>
+          </div>
+
+          <div class="top-actions">
+            <span class="status-chip" [class.offline]="!network.online()">
+              <app-ui-icon [name]="network.online() ? 'shield' : 'offline'" [size]="16" />
+              {{ network.statusLabel() }}
+            </span>
+
+            @if (auth.currentUser(); as user) {
+              <span class="user-chip">
+                <img class="avatar sm" [src]="user.avatarUrl || avatarFallback(user.name)" [alt]="user.name">
+                <span>
+                  <strong>{{ user.name }}</strong>
+                  <small>{{ user.points }} pts</small>
+                </span>
+              </span>
+
+              <button class="button ghost small" type="button" (click)="logout()">
+                <app-ui-icon name="logout" [size]="16" />
+                Sortir
+              </button>
+            } @else {
+              <a class="button small" routerLink="/auth/login">
+                <app-ui-icon name="login" [size]="16" />
+                Connexion
+              </a>
+            }
           </div>
         </div>
 
-        <div class="top-actions">
-          <span class="status-chip" [class.offline]="!network.online()">
-            <app-ui-icon [name]="network.online() ? 'shield' : 'offline'" [size]="16" />
-            {{ network.statusLabel() }}
-          </span>
-
-          @if (auth.currentUser(); as user) {
-            <span class="user-chip">
-              <img class="avatar sm" [src]="user.avatarUrl || avatarFallback(user.name)" [alt]="user.name">
-              <span>
-                <strong>{{ user.name }}</strong>
-                <small>{{ user.points }} pts</small>
-              </span>
-            </span>
-
-            <button class="button ghost small" type="button" (click)="logout()">
-              <app-ui-icon name="logout" [size]="16" />
-              Sortir
-            </button>
-          } @else {
-            <a class="button small" routerLink="/auth/login">
-              <app-ui-icon name="login" [size]="16" />
-              Connexion
+        <nav class="desktop-nav" aria-label="Navigation principale">
+          @for (item of navItems; track item.route) {
+            <a
+              class="desktop-nav-link"
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: item.exact }"
+            >
+              <app-ui-icon [name]="item.icon" [size]="18" />
+              <span>{{ item.label }}</span>
             </a>
           }
-        </div>
+        </nav>
       </header>
 
       @if (!network.online()) {
@@ -95,7 +111,24 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       @if (installHelpOpen()) {
         <button class="install-backdrop" type="button" aria-label="Fermer l'aide d'installation" (click)="closeInstallHelp()"></button>
 
-        <section class="container install-sheet panel" role="dialog" aria-modal="true" aria-labelledby="install-sheet-title">
+        <section
+          class="container install-sheet panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="install-sheet-title"
+          (pointerdown)="startInstallSwipe($event)"
+          (pointermove)="trackInstallSwipe($event)"
+          (pointerup)="endInstallSwipe($event)"
+          (pointercancel)="cancelInstallSwipe($event)"
+          [style.transform]="installSheetTransform()"
+          [style.transition]="installHelpDragging() ? 'none' : 'transform 220ms ease, opacity 220ms ease'"
+          [style.opacity]="installSheetOpacity()"
+        >
+          <div class="install-sheet-handle" role="presentation" aria-hidden="true">
+            <span class="install-sheet-grip"></span>
+            <span class="install-sheet-hint">Glisse horizontalement pour fermer</span>
+          </div>
+
           <div class="install-sheet-head">
             <div>
               <p class="eyebrow">Installer AFRISTORY</p>
@@ -171,7 +204,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       .shell {
         min-height: 100dvh;
         padding-top: 1rem;
-        padding-bottom: 6.85rem;
+        padding-bottom: 1rem;
         background:
           radial-gradient(circle at 10% 0%, rgba(255, 107, 0, 0.08), transparent 22%),
           radial-gradient(circle at 82% 10%, rgba(255, 200, 0, 0.08), transparent 20%),
@@ -230,10 +263,17 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         position: relative;
         z-index: 1;
         display: flex;
+        flex-direction: column;
+        gap: 0.95rem;
+        padding: 1rem 1.1rem;
+      }
+
+      .shell-top-main {
+        display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
         gap: 1.2rem;
-        padding: 1rem 1.1rem;
       }
 
       .brand-block {
@@ -327,7 +367,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       .install-fab {
         position: fixed;
         right: max(1rem, env(safe-area-inset-right));
-        bottom: calc(6.55rem + env(safe-area-inset-bottom));
+        bottom: calc(1rem + env(safe-area-inset-bottom));
         z-index: 25;
         width: min(24rem, calc(100vw - 1.5rem));
         display: flex;
@@ -402,14 +442,43 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       .install-sheet {
         position: fixed;
         left: 50%;
-        bottom: calc(7.8rem + env(safe-area-inset-bottom));
+        bottom: calc(1.75rem + env(safe-area-inset-bottom));
         z-index: 25;
         width: min(36rem, calc(100vw - 1rem));
-        transform: translateX(-50%);
         padding: 1rem;
         display: grid;
         gap: 0.95rem;
         box-shadow: 0 28px 70px rgba(2, 8, 18, 0.24);
+        touch-action: pan-y;
+      }
+
+      .install-sheet-handle {
+        display: grid;
+        justify-items: center;
+        gap: 0.35rem;
+        padding-bottom: 0.2rem;
+        touch-action: pan-y;
+        user-select: none;
+        cursor: grab;
+      }
+
+      .install-sheet-handle:active {
+        cursor: grabbing;
+      }
+
+      .install-sheet-grip {
+        width: 3.2rem;
+        height: 0.28rem;
+        border-radius: 999px;
+        background: rgba(10, 17, 40, 0.16);
+      }
+
+      .install-sheet-hint {
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .install-sheet-head {
@@ -517,22 +586,87 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       }
 
       .dock-link span {
-        display: -webkit-box;
+        display: block;
+        min-width: 0;
         max-width: 100%;
         font-size: 0.68rem;
         font-weight: 800;
         letter-spacing: 0.02em;
-        line-height: 1.05;
+        line-height: 1.12;
         text-align: center;
-        white-space: normal;
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+      }
+
+      .desktop-nav {
+        display: none;
+      }
+
+      .desktop-nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.78rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: var(--surface-soft);
+        color: var(--muted-strong);
+        transition:
+          transform 180ms ease,
+          background-color 180ms ease,
+          color 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .desktop-nav-link:hover {
+        transform: translateY(-1px);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .desktop-nav-link.active {
+        color: var(--text);
+        background: rgba(255, 107, 0, 0.12);
+        border-color: rgba(255, 107, 0, 0.18);
+      }
+
+      .desktop-nav-link span {
+        font-size: 0.88rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+
+      @media (min-width: 1041px) {
+        .dock {
+          display: none;
+        }
+
+        .desktop-nav {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.55rem;
+          padding-top: 0.2rem;
+        }
+      }
+
+      @media (max-width: 1040px) {
+        .shell {
+          padding-bottom: 6.85rem;
+        }
+
+        .install-fab {
+          bottom: calc(6.55rem + env(safe-area-inset-bottom));
+        }
+
+        .install-sheet {
+          bottom: calc(7.1rem + env(safe-area-inset-bottom));
+        }
       }
 
       @media (max-width: 900px) {
-        .shell-top {
+        .shell-top-main {
           flex-direction: column;
           align-items: stretch;
         }
@@ -581,6 +715,8 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
 })
 export class ShellComponent {
   readonly installHelpOpen = signal(false);
+  readonly installHelpDragging = signal(false);
+  readonly installHelpOffset = signal(0);
   readonly avatarFallback = avatarUrl;
   readonly navItems = [
     { label: 'Fil', route: '/app/feed', icon: 'home', exact: true },
@@ -590,6 +726,11 @@ export class ShellComponent {
     { label: 'Explorer', route: '/app/explore', icon: 'explore', exact: true },
     { label: 'Profil', route: '/app/profile', icon: 'profile', exact: true },
   ];
+
+  private installHelpPointerId: number | null = null;
+  private installHelpStartX = 0;
+  private installHelpStartY = 0;
+  private installHelpSwipeAxis: 'none' | 'x' | 'y' = 'none';
 
   get installButtonLabel(): string {
     if (this.pwa.installable()) {
@@ -626,16 +767,110 @@ export class ShellComponent {
     if (this.pwa.installable()) {
       const accepted = await this.pwa.install();
       if (accepted) {
-        this.installHelpOpen.set(false);
+        this.closeInstallHelp();
       }
       return;
     }
 
+    this.resetInstallSwipeState();
     this.installHelpOpen.set(true);
   }
 
   closeInstallHelp(): void {
+    this.resetInstallSwipeState();
     this.installHelpOpen.set(false);
+  }
+
+  installSheetTransform(): string {
+    return `translateX(calc(-50% + ${this.installHelpOffset()}px))`;
+  }
+
+  installSheetOpacity(): number {
+    const distance = Math.min(Math.abs(this.installHelpOffset()), 180);
+    return Number((1 - distance / 700).toFixed(3));
+  }
+
+  startInstallSwipe(event: PointerEvent): void {
+    if (!this.installHelpOpen()) {
+      return;
+    }
+
+    if (this.isInteractiveSwipeTarget(event.target)) {
+      return;
+    }
+
+    this.installHelpPointerId = event.pointerId;
+    this.installHelpStartX = event.clientX;
+    this.installHelpStartY = event.clientY;
+    this.installHelpSwipeAxis = 'none';
+    this.installHelpDragging.set(true);
+    this.installHelpOffset.set(0);
+
+    const target = event.currentTarget as HTMLElement | null;
+    target?.setPointerCapture(event.pointerId);
+  }
+
+  trackInstallSwipe(event: PointerEvent): void {
+    if (!this.installHelpDragging() || event.pointerId !== this.installHelpPointerId) {
+      return;
+    }
+
+    const dx = event.clientX - this.installHelpStartX;
+    const dy = event.clientY - this.installHelpStartY;
+
+    if (this.installHelpSwipeAxis === 'none') {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) {
+        return;
+      }
+
+      this.installHelpSwipeAxis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+    }
+
+    if (this.installHelpSwipeAxis !== 'x') {
+      return;
+    }
+
+    this.installHelpOffset.set(Math.max(-180, Math.min(180, dx)));
+  }
+
+  endInstallSwipe(event: PointerEvent): void {
+    if (event.pointerId !== this.installHelpPointerId) {
+      return;
+    }
+
+    this.finishInstallSwipe();
+  }
+
+  cancelInstallSwipe(event: PointerEvent): void {
+    if (event.pointerId !== this.installHelpPointerId) {
+      return;
+    }
+
+    this.finishInstallSwipe();
+  }
+
+  private finishInstallSwipe(): void {
+    const shouldClose = Math.abs(this.installHelpOffset()) > 110;
+    this.resetInstallSwipeState();
+
+    if (shouldClose) {
+      this.installHelpOpen.set(false);
+    }
+  }
+
+  private resetInstallSwipeState(): void {
+    this.installHelpDragging.set(false);
+    this.installHelpOffset.set(0);
+    this.installHelpPointerId = null;
+    this.installHelpSwipeAxis = 'none';
+  }
+
+  private isInteractiveSwipeTarget(target: EventTarget | null): boolean {
+    if (!(target instanceof HTMLElement)) {
+      return false;
+    }
+
+    return Boolean(target.closest('button, a, input, textarea, select, label'));
   }
 
   logout(): void {

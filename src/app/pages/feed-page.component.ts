@@ -14,69 +14,103 @@ type DraftMediaType = 'text' | 'image' | 'video';
   imports: [FormsModule, RouterLink],
   template: `
     <section class="feed-page">
-      <section class="hero panel">
-        <div class="hero-copy">
-          <p class="eyebrow">Fil social • JOJ Dakar 2026</p>
-          <h2 class="title">
-            Une timeline qui relie le sport, la culture africaine et la communauté.
-          </h2>
-          <p class="subtitle">
-            Partagez un texte, ajoutez une photo ou diffusez une vidéo. Suivez les JOJ, les
-            tendances et les histoires inspirantes du continent au même endroit.
-          </p>
+      <section class="hero">
+        <video
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        >
+          <source src="/assets/video.mp4" type="video/mp4">
+        </video>
 
-          <div class="hero-actions">
-            <a class="button" routerLink="/app/sports">Suivre les compétitions</a>
-            <a class="button secondary" routerLink="/app/explore">Explorer Dakar</a>
-          </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-glow hero-glow-orange"></div>
+        <div class="hero-glow hero-glow-gold"></div>
+        <div class="hero-glow hero-glow-green"></div>
 
-          <div class="badge-list chips">
-            @for (trend of content.trends(); track trend.label) {
-              <span class="chip">{{ trend.label }} · {{ trend.posts }}</span>
-            }
-          </div>
-        </div>
-
-        <div class="hero-side">
-          <article class="summary-card card">
-            <p class="eyebrow">Instantané</p>
-            <h3>{{ content.posts().length }} posts actifs</h3>
-            <p>
-              Les contenus locaux restent accessibles grâce au service worker et au cache PWA.
-            </p>
-            <div class="summary-stats">
-              <div>
-                <strong>{{ content.events().length }}</strong>
-                <span>événements</span>
-              </div>
-              <div>
-                <strong>{{ content.cultures().length }}</strong>
-                <span>angles culturels</span>
-              </div>
+        <div class="hero-shell">
+          <div class="hero-copy">
+            <div class="hero-topline">
+              <p class="eyebrow">Fil social • JOJ Dakar 2026</p>
+              <span class="hero-live">
+                <span class="hero-live-dot"></span>
+                Flux dynamique
+              </span>
             </div>
-          </article>
 
-          <article class="summary-card card accent-card">
-            @if (auth.currentUser(); as user) {
-              <p class="eyebrow">Votre profil</p>
-              <div class="profile-row">
-                <img class="avatar" [src]="user.avatarUrl || avatarFallback(user.name)" [alt]="user.name">
+            <h2 class="title">
+              Une timeline qui relie le sport, la culture africaine et la communauté.
+            </h2>
+            <p class="subtitle">
+              Partagez un texte, ajoutez une photo ou diffusez une vidéo. Suivez les JOJ, les
+              tendances et les histoires inspirantes du continent au même endroit.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button" routerLink="/app/sports">Suivre les compétitions</a>
+              <a class="button secondary" routerLink="/app/explore">Explorer Dakar</a>
+            </div>
+
+            <div class="badge-list chips hero-chips">
+              @for (trend of content.trends(); track trend.label) {
+                <span class="chip">{{ trend.label }} · {{ trend.posts }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="hero-rail">
+            <article class="hero-card">
+              <p class="eyebrow">Instantané</p>
+              <div class="hero-metrics">
                 <div>
-                  <strong>{{ user.name }}</strong>
-                  <p>{{ user.handle }} · {{ user.country }}</p>
+                  <strong>{{ content.posts().length }}</strong>
+                  <span>posts</span>
+                </div>
+                <div>
+                  <strong>{{ content.stories().length }}</strong>
+                  <span>stories</span>
+                </div>
+                <div>
+                  <strong>{{ content.events().length }}</strong>
+                  <span>événements</span>
+                </div>
+                <div>
+                  <strong>{{ content.cultures().length }}</strong>
+                  <span>cultures</span>
                 </div>
               </div>
-              <div class="mini-metrics">
-                <span><strong>{{ user.points }}</strong> pts</span>
-                <span><strong>{{ user.streak }}</strong> jours</span>
-              </div>
-            } @else {
-              <p class="eyebrow">Connexion</p>
-              <h3>Publiez et gagnez des points</h3>
-              <p>Créez un compte pour débloquer les publications, le profil et les récompenses.</p>
-              <a class="button small" routerLink="/auth/login">Se connecter</a>
-            }
-          </article>
+              <p class="hero-note">
+                Le contenu reste accessible en ligne comme hors ligne grâce au cache PWA.
+              </p>
+            </article>
+
+            <article class="hero-card">
+              @if (auth.currentUser(); as user) {
+                <p class="eyebrow">Votre profil</p>
+                <div class="profile-row">
+                  <img class="avatar" [src]="user.avatarUrl || avatarFallback(user.name)" [alt]="user.name">
+                  <div>
+                    <strong>{{ user.name }}</strong>
+                    <p>{{ user.handle }} · {{ user.country }}</p>
+                  </div>
+                </div>
+                <div class="mini-metrics">
+                  <span><strong>{{ user.points }}</strong> pts</span>
+                  <span><strong>{{ user.streak }}</strong> jours</span>
+                  <span><strong>{{ content.places().length }}</strong> lieux</span>
+                </div>
+              } @else {
+                <p class="eyebrow">Connexion</p>
+                <h3>Publiez et gagnez des points</h3>
+                <p>Créez un compte pour débloquer les publications, le profil et les récompenses.</p>
+                <a class="button small" routerLink="/auth/login">Se connecter</a>
+              }
+            </article>
+          </div>
         </div>
       </section>
 
@@ -382,81 +416,242 @@ type DraftMediaType = 'text' | 'image' | 'video';
       }
 
       .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.35fr) minmax(290px, 0.85fr);
-        gap: 1rem;
-        padding: 1.2rem;
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        min-height: clamp(36rem, 78vh, 54rem);
+        padding: clamp(1rem, 2vw, 1.4rem);
+        border-radius: 32px;
+        background: linear-gradient(135deg, #0a1128 0%, #111827 42%, #1c120d 100%);
+        box-shadow: 0 30px 80px rgba(10, 17, 40, 0.18);
       }
 
-      .hero-copy,
-      .hero-side {
+      .hero-video,
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+      }
+
+      .hero-video {
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        filter: saturate(1.05) contrast(1.02) brightness(0.72);
+        transform: scale(1.03);
+      }
+
+      .hero-overlay {
+        z-index: 1;
+        background:
+          linear-gradient(90deg, rgba(6, 10, 24, 0.9) 0%, rgba(6, 10, 24, 0.7) 40%, rgba(6, 10, 24, 0.24) 100%),
+          linear-gradient(180deg, rgba(6, 10, 24, 0.18) 0%, rgba(6, 10, 24, 0.74) 100%);
+      }
+
+      .hero-glow {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        border-radius: 999px;
+        filter: blur(68px);
+        opacity: 0.72;
+      }
+
+      .hero-glow-orange {
+        top: 8%;
+        left: -10%;
+        width: 20rem;
+        height: 20rem;
+        background: rgba(255, 107, 0, 0.18);
+      }
+
+      .hero-glow-gold {
+        top: 6%;
+        right: -8%;
+        width: 22rem;
+        height: 22rem;
+        background: rgba(255, 200, 0, 0.14);
+      }
+
+      .hero-glow-green {
+        right: 10%;
+        bottom: -12%;
+        width: 18rem;
+        height: 18rem;
+        background: rgba(0, 168, 89, 0.12);
+      }
+
+      .hero-shell {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(290px, 0.75fr);
+        gap: 1rem;
+        align-items: stretch;
+        min-height: 100%;
+      }
+
+      .hero-copy {
+        align-self: end;
         display: grid;
         gap: 1rem;
+        padding: clamp(0.9rem, 2vw, 1.5rem);
+        color: #fff;
+        max-width: 55rem;
+      }
+
+      .hero-topline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .hero .eyebrow {
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .hero-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.45rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-live-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: #00c777;
+        box-shadow: 0 0 0 4px rgba(0, 199, 119, 0.14);
+      }
+
+      .hero .title {
+        margin: 0;
+        font-size: clamp(2.35rem, 5vw, 4.7rem);
+        line-height: 0.92;
+        letter-spacing: -0.07em;
+        color: #fff;
+        max-width: 12ch;
+      }
+
+      .hero .subtitle {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.6;
+        max-width: 44ch;
+        font-size: clamp(1rem, 1.2vw, 1.12rem);
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.6rem;
+        gap: 0.7rem;
       }
 
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
+      .hero .button.secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: none;
       }
 
-      .summary-card {
-        padding: 1rem;
+      .hero .button.secondary:hover {
+        background: rgba(255, 255, 255, 0.14);
       }
 
-      .summary-card h3 {
-        margin: 0.2rem 0 0;
-        font-size: 1.2rem;
+      .hero .button {
+        box-shadow: 0 18px 30px rgba(255, 107, 0, 0.22);
       }
 
-      .summary-card p {
-        margin: 0.55rem 0 0;
-        color: var(--muted);
-        line-height: 1.6;
+      .hero-chips .chip {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(14px);
       }
 
-      .summary-stats {
-        display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
-      }
-
-      .summary-stats div {
+      .hero-rail {
         display: grid;
-        gap: 0.2rem;
+        gap: 0.9rem;
+        align-content: end;
+        padding: clamp(0.9rem, 2vw, 1.5rem);
       }
 
-      .summary-stats strong {
-        font-size: 1.4rem;
+      .hero-card {
+        display: grid;
+        gap: 0.9rem;
+        padding: 1rem;
+        border-radius: 28px;
+        background: rgba(8, 12, 27, 0.54);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        color: #fff;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
       }
 
-      .summary-stats span {
-        color: var(--muted);
-        font-size: 0.84rem;
+      .hero-card .eyebrow {
+        color: rgba(255, 255, 255, 0.68);
       }
 
-      .accent-card {
-        background:
-          radial-gradient(circle at top right, rgba(255, 184, 77, 0.18), transparent 28%),
-          radial-gradient(circle at bottom left, rgba(0, 168, 89, 0.08), transparent 28%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(247, 249, 252, 0.96));
-        border-color: rgba(255, 107, 0, 0.14);
+      .hero-card p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
+        line-height: 1.6;
       }
 
       .profile-row {
         display: flex;
         align-items: center;
         gap: 0.9rem;
-        margin-top: 0.6rem;
       }
 
       .profile-row p {
         margin: 0.2rem 0 0;
+      }
+
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+
+      .hero-metrics div {
+        display: grid;
+        gap: 0.22rem;
+        padding: 0.9rem;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .hero-metrics strong {
+        font-size: 1.55rem;
+        letter-spacing: -0.05em;
+        color: #fff;
+      }
+
+      .hero-metrics span {
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.83rem;
+        font-weight: 700;
+      }
+
+      .hero-note {
+        color: rgba(255, 255, 255, 0.74);
+      }
+
+      .hero-card .avatar {
+        border: 2px solid rgba(255, 255, 255, 0.18);
       }
 
       .mini-metrics {
@@ -808,17 +1003,60 @@ type DraftMediaType = 'text' | 'image' | 'video';
         color: #007844;
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        .hero-video {
+          display: none;
+        }
+      }
+
       @media (max-width: 1040px) {
-        .hero,
+        .hero {
+          min-height: auto;
+        }
+
+        .hero-shell,
         .feed-grid {
           grid-template-columns: 1fr;
+        }
+
+        .hero-copy,
+        .hero-rail {
+          padding: 1rem;
+        }
+
+        .hero-rail {
+          padding-top: 0;
+        }
+
+        .hero .title {
+          max-width: 14ch;
         }
       }
 
       @media (max-width: 760px) {
-        .tool-grid,
-        .comment-form {
+        .hero {
+          padding: 0.8rem;
+          border-radius: 26px;
+        }
+
+        .hero .title {
+          font-size: clamp(2rem, 11vw, 2.9rem);
+        }
+
+        .hero-actions .button {
+          flex: 1 1 12rem;
+          justify-content: center;
+        }
+
+        .hero-metrics {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .tool-grid {
           grid-template-columns: 1fr;
+        }
+
+        .comment-form {
           flex-direction: column;
         }
 
