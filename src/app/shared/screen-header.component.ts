@@ -7,7 +7,7 @@ import { UiIconComponent } from './ui-icon.component';
   standalone: true,
   imports: [RouterLink, UiIconComponent],
   template: `
-    <header class="screen-header panel" [class]="'tone-' + tone">
+    <header class="screen-header" [class]="'tone-' + tone">
       <a class="screen-back" [routerLink]="backRoute" aria-label="Retour">
         <app-ui-icon name="arrow-left" [size]="18" />
       </a>
@@ -32,12 +32,16 @@ import { UiIconComponent } from './ui-icon.component';
       }
 
       .screen-header {
+        width: 100%;
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: center;
         gap: 1rem;
         padding: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
       }
 
       .tone-navy {
