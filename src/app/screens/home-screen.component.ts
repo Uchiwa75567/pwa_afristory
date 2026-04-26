@@ -16,7 +16,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
     <section class="home-screen">
       <section class="hero card">
         <div class="hero-top">
-          <div class="hero-user">
+          <a class="hero-user profile-link" routerLink="/profile" aria-label="Voir le profil personnel">
             <span class="hero-avatar">
               <img
                 class="hero-avatar-image"
@@ -29,7 +29,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
               <strong>Asalaa maalekum</strong>
               <p>JOJ Dakar 2026 · Jour 7/14</p>
             </div>
-          </div>
+          </a>
 
           <button class="hero-bell" type="button" (click)="openNotifications()">
             <app-ui-icon name="bell" [size]="18" />
@@ -220,6 +220,9 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        color: inherit;
+        text-decoration: none;
+        cursor: pointer;
       }
 
       .hero-avatar,

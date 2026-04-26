@@ -4,7 +4,6 @@ import { AfriStoryStateService } from '../../core/afristory-state.service';
 import { formatFcfa, formatNumber } from '../../core/format';
 import { NetworkService } from '../../core/network.service';
 import { PwaService } from '../../core/pwa.service';
-import { ProfileStoreService } from '../../core/profile-store.service';
 import { shellNavItems } from '../../core/mock-data';
 import type { NavItem } from '../../core/models';
 import { UiIconComponent } from '../../shared/ui-icon.component';
@@ -55,13 +54,9 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
             {{ installLabel() }}
           </button>
 
-          <a class="profile-pill button secondary small" routerLink="/profile">
-            <img
-              class="profile-avatar"
-              [src]="profileAvatar()"
-              [alt]="profileName()"
-            >
-            <span class="desktop-only">Profil</span>
+          <a class="button secondary small" routerLink="/marketplace" aria-label="Marché">
+            <app-ui-icon name="shopping-bag" [size]="15" />
+            <span class="desktop-only">Marché</span>
           </a>
         </div>
       </header>
@@ -279,18 +274,6 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         flex-wrap: wrap;
         justify-content: flex-end;
         gap: 0.55rem;
-      }
-
-      .profile-pill {
-        padding-inline: 0.7rem 0.95rem;
-      }
-
-      .profile-avatar {
-        width: 1.9rem;
-        height: 1.9rem;
-        border-radius: 999px;
-        object-fit: cover;
-        background: var(--surface-soft);
       }
 
       .status-pill {
@@ -599,7 +582,6 @@ export class ShellComponent {
     public readonly state: AfriStoryStateService,
     public readonly network: NetworkService,
     public readonly pwa: PwaService,
-    public readonly profileStore: ProfileStoreService,
   ) {}
 
   pointsLabel(): string {
@@ -637,14 +619,6 @@ export class ShellComponent {
       default:
         return 'AfriStory';
     }
-  }
-
-  profileAvatar(): string {
-    return this.profileStore.profile().avatarUrl;
-  }
-
-  profileName(): string {
-    return this.profileStore.profile().name;
   }
 
   async handleInstall(): Promise<void> {
