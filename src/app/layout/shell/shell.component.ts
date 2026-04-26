@@ -22,7 +22,11 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       <header class="shell-topbar card">
         <div class="brand-block">
           <span class="brand-mark">
-            <app-ui-icon name="sparkles" [size]="20" />
+            <img
+              class="brand-logo"
+              [src]="brandLogoUrl"
+              alt="AfriStory"
+            >
           </span>
           <div class="brand-copy">
             <p class="eyebrow">AfriStory JOJ</p>
@@ -242,14 +246,24 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       }
 
       .brand-mark {
-        width: 2.85rem;
+        width: 5.1rem;
         height: 2.85rem;
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.35rem 0.6rem;
         border-radius: 1rem;
-        background: linear-gradient(135deg, rgba(255, 107, 0, 0.16), rgba(255, 200, 0, 0.16));
-        color: var(--orange);
+        background: #fff;
+        border: 1px solid rgba(10, 17, 40, 0.08);
+        box-shadow: 0 0.35rem 1rem rgba(10, 17, 40, 0.05);
         flex: none;
+      }
+
+      .brand-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
       }
 
       .brand-copy h1 {
@@ -577,6 +591,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
   ],
 })
 export class ShellComponent {
+  readonly brandLogoUrl = '/assets/image-removebg-preview%20(5).png';
   readonly navItems: NavItem[] = shellNavItems;
   readonly installHelpOpen = signal(false);
 

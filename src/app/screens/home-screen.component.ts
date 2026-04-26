@@ -91,8 +91,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
           <section class="activity-section">
             <div class="section-head">
               <div>
-                <p class="eyebrow">Activité récente</p>
-                <h3 class="title">Activité recente</h3>
+                <h3 class="title">Activité récente</h3>
               </div>
 
               <button class="text-link" type="button" (click)="openAllActivity()">
@@ -375,6 +374,9 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         align-items: center;
         gap: 0.9rem;
         padding: 0.95rem 1rem;
+        width: min(calc(100% - 2rem), 30rem);
+        justify-self: center;
+        margin-inline: auto;
         border-radius: 24px;
         background: var(--white);
       }
@@ -421,6 +423,9 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         align-items: center;
         gap: 0.9rem;
         padding: 1rem;
+        width: min(calc(100% - 3rem), 28rem);
+        justify-self: center;
+        margin-inline: auto;
         border: 0;
         border-radius: 24px;
         background: linear-gradient(135deg, #0a1128 0%, #0f193f 100%);
@@ -471,10 +476,21 @@ import { UiIconComponent } from '../shared/ui-icon.component';
       }
 
       .section-head {
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: end;
-        justify-content: space-between;
         gap: 0.75rem;
+        width: 100%;
+      }
+
+      .section-head > div {
+        min-width: 0;
+      }
+
+      .section-head .eyebrow,
+      .section-head .title {
+        margin-right: 0;
+        text-align: left;
       }
 
       .text-link {
@@ -690,6 +706,10 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         .heritage-copy strong,
         .live-copy strong {
           font-size: 0.98rem;
+        }
+
+        .section-head {
+          align-items: start;
         }
       }
     `,
