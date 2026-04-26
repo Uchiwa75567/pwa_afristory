@@ -174,14 +174,20 @@ import { UiIconComponent } from '../shared/ui-icon.component';
       .home-screen {
         display: grid;
         gap: 1rem;
+        width: 100%;
       }
 
       .hero {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 17rem;
         overflow: hidden;
         padding: 1rem;
         background: linear-gradient(180deg, #ff6b00 0%, #ff7108 58%, #ff6200 100%);
         color: #fff;
+        border-radius: 30px;
       }
 
       .hero::before,
@@ -211,7 +217,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         position: relative;
         z-index: 1;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
         gap: 0.75rem;
       }
@@ -271,7 +277,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         display: flex;
         align-items: baseline;
         gap: 0.4rem;
-        margin-top: 1.1rem;
+        margin-top: 1.45rem;
         font-variant-numeric: tabular-nums;
       }
 
@@ -290,7 +296,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         position: relative;
         z-index: 1;
         margin: 0.35rem 0 0;
-        font-size: 1rem;
+        font-size: 0.96rem;
         font-weight: 700;
         color: rgba(255, 255, 255, 0.9);
       }
@@ -298,7 +304,8 @@ import { UiIconComponent } from '../shared/ui-icon.component';
       .hero-withdraw {
         position: relative;
         z-index: 1;
-        margin-top: 0.95rem;
+        margin-top: auto;
+        margin-bottom: 0.05rem;
         width: fit-content;
         border: 0;
         background: #fff;
@@ -683,7 +690,11 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         }
 
         .hero-points strong {
-          font-size: clamp(3.3rem, 18vw, 4.6rem);
+          font-size: clamp(4.4rem, 17vw, 6.2rem);
+        }
+
+        .hero-money {
+          font-size: 0.92rem;
         }
 
         .quick-actions {

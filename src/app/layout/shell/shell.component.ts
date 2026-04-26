@@ -18,49 +18,6 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       <div class="shell-orb shell-orb-gold"></div>
       <div class="shell-orb shell-orb-green"></div>
 
-      <header class="shell-topbar card">
-        <div class="brand-block">
-          <span class="brand-mark">
-            <img
-              class="brand-logo"
-              [src]="brandLogoUrl"
-              alt="AfriStory"
-            >
-          </span>
-          <div class="brand-copy">
-            <p class="eyebrow">AfriStory JOJ</p>
-            <h1>Plateforme sociale · live · marché</h1>
-          </div>
-        </div>
-
-        <div class="topbar-actions">
-          <span class="status-pill" [class.offline]="!network.online()">
-            <app-ui-icon [name]="network.online() ? 'shield' : 'offline'" [size]="15" />
-            {{ network.statusLabel() }}
-          </span>
-
-          <span class="status-pill accent">
-            <app-ui-icon name="wallet" [size]="15" />
-            {{ pointsLabel() }} pts
-          </span>
-
-          <span class="status-pill gold">
-            <app-ui-icon name="award" [size]="15" />
-            Niveau {{ state.level() }}
-          </span>
-
-          <button class="button secondary small" type="button" (click)="handleInstall()">
-            <app-ui-icon [name]="pwa.installable() ? 'install' : 'sparkles'" [size]="15" />
-            {{ installLabel() }}
-          </button>
-
-          <a class="button secondary small" routerLink="/marketplace" aria-label="Marché">
-            <app-ui-icon name="shopping-bag" [size]="15" />
-            <span class="desktop-only">Marché</span>
-          </a>
-        </div>
-      </header>
-
       <div class="shell-grid">
         <aside class="desktop-rail card">
           <nav class="rail-nav" aria-label="Navigation principale">
@@ -175,7 +132,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       .app-shell {
         position: relative;
         min-height: 100vh;
-        padding: 1rem 0 7.5rem;
+        padding: 0.5rem 0 7.5rem;
         background:
           radial-gradient(circle at 8% 0%, rgba(255, 107, 0, 0.08), transparent 18%),
           radial-gradient(circle at 88% 10%, rgba(255, 200, 0, 0.08), transparent 20%),
@@ -217,89 +174,10 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         background: rgba(0, 168, 89, 0.18);
       }
 
-      .shell-topbar,
       .shell-grid,
       .mobile-dock {
         width: min(1280px, calc(100vw - 1rem));
         margin-inline: auto;
-      }
-
-      .shell-topbar {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: 1rem;
-      }
-
-      .brand-block {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-      }
-
-      .brand-mark {
-        width: 5.1rem;
-        height: 2.85rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.35rem 0.6rem;
-        border-radius: 1rem;
-        background: #fff;
-        border: 1px solid rgba(10, 17, 40, 0.08);
-        box-shadow: 0 0.35rem 1rem rgba(10, 17, 40, 0.05);
-        flex: none;
-      }
-
-      .brand-logo {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        display: block;
-      }
-
-      .brand-copy h1 {
-        margin: 0.15rem 0 0;
-        font-size: clamp(1.05rem, 2vw, 1.4rem);
-        line-height: 1.1;
-        letter-spacing: -0.05em;
-      }
-
-      .topbar-actions {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 0.55rem;
-      }
-
-      .status-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.7rem 0.9rem;
-        border-radius: 999px;
-        background: var(--surface-soft);
-        border: 1px solid var(--border);
-        color: var(--text);
-        font-size: 0.88rem;
-        font-weight: 800;
-        white-space: nowrap;
-      }
-
-      .status-pill.offline {
-        color: var(--orange);
-      }
-
-      .status-pill.accent {
-        background: rgba(255, 107, 0, 0.1);
-      }
-
-      .status-pill.gold {
-        background: rgba(255, 200, 0, 0.16);
       }
 
       .shell-grid {
@@ -309,7 +187,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         grid-template-columns: minmax(280px, 0.32fr) minmax(0, 1fr);
         gap: 1rem;
         align-items: start;
-        padding-top: 1rem;
+        padding-top: 0.5rem;
       }
 
       .desktop-rail {
@@ -552,15 +430,6 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       }
 
       @media (max-width: 760px) {
-        .shell-topbar {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .topbar-actions {
-          justify-content: flex-start;
-        }
-
         .mobile-dock {
           width: min(100vw - 0.5rem, 1000px);
           grid-template-columns: repeat(5, minmax(0, 1fr));
