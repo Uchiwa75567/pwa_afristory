@@ -1,5 +1,5 @@
 export function avatarUrl(seed: string): string {
-  return `https://i.pravatar.cc/320?u=${encodeURIComponent(seed || 'afristory')}`;
+  return '/assets/avatar-user.svg';
 }
 
 export function coverUrl(seed: string): string {

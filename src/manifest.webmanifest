@@ -1,11 +1,11 @@
 {
-  "name": "AFRISTORY",
-  "short_name": "AFRISTORY",
-  "description": "PWA sociale, culturelle et sportive autour des JOJ Dakar 2026.",
+  "name": "AfriStory JOJ",
+  "short_name": "AfriStory",
+  "description": "Plateforme sociale, sportive, culturelle et marchande autour des JOJ Dakar 2026.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0A1128",
+  "background_color": "#F5F3EF",
   "theme_color": "#0A1128",
   "lang": "fr",
   "icons": [

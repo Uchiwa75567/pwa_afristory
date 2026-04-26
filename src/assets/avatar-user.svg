@@ -1,0 +1,31 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar AfriStory">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF3E5"/>
+      <stop offset="0.52" stop-color="#FFD7B0"/>
+      <stop offset="1" stop-color="#FF8C42"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="152" y1="290" x2="360" y2="454" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1128"/>
+      <stop offset="1" stop-color="#15244F"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="182" y1="120" x2="340" y2="242" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#1F2937"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="160" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="182" fill="white" fill-opacity="0.22"/>
+  <circle cx="368" cy="168" r="44" fill="white" fill-opacity="0.28"/>
+  <circle cx="154" cy="364" r="56" fill="white" fill-opacity="0.2"/>
+  <ellipse cx="256" cy="236" rx="118" ry="124" fill="#F7D6B5"/>
+  <path d="M154 233c2-56 45-110 102-118 58-8 112 22 134 75 9 20 11 43 10 68-11-19-38-37-61-46-34-13-79-16-120-8-26 5-52 16-65 29z" fill="url(#hair)"/>
+  <path d="M178 177c8-28 33-53 67-58 31-5 65 5 85 25 9 9 17 23 20 38-18-8-41-12-66-12-35 0-71 6-106 7z" fill="#2B1B12" fill-opacity="0.28"/>
+  <circle cx="222" cy="238" r="9" fill="#1F2937"/>
+  <circle cx="290" cy="238" r="9" fill="#1F2937"/>
+  <path d="M222 283c14 13 54 13 68 0" stroke="#B66A4B" stroke-width="10" stroke-linecap="round"/>
+  <path d="M174 230c7-27 25-48 52-63" stroke="#2C1E17" stroke-width="16" stroke-linecap="round"/>
+  <path d="M338 229c-7-27-25-48-52-63" stroke="#2C1E17" stroke-width="16" stroke-linecap="round"/>
+  <path d="M174 334c11-18 31-32 62-42 8-2 18 2 20 10l6 20c2 8 9 13 17 13s15-5 17-13l6-20c2-8 12-12 20-10 31 10 51 24 62 42 21 33 24 93 24 93H150s3-60 24-93z" fill="url(#shirt)"/>
+  <path d="M201 320c15 6 31 9 55 9s40-3 55-9" stroke="white" stroke-opacity="0.22" stroke-width="8" stroke-linecap="round"/>
+</svg>

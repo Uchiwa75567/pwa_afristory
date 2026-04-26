@@ -1,63 +1,120 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'app/feed',
+    redirectTo: 'splash',
   },
   {
-    path: 'auth/login',
+    path: 'splash',
     loadComponent: () =>
-      import('./pages/login-page.component').then((m) => m.LoginPageComponent),
+      import('./screens/splash-screen.component').then((m) => m.SplashScreenComponent),
   },
   {
-    path: 'app',
-    loadComponent: () =>
-      import('./layout/shell/shell.component').then((m) => m.ShellComponent),
+    path: '',
+    loadComponent: () => import('./layout/shell/shell.component').then((m) => m.ShellComponent),
     children: [
       {
-        path: 'feed',
+        path: 'home',
         loadComponent: () =>
-          import('./pages/feed-page.component').then((m) => m.FeedPageComponent),
+          import('./screens/home-screen.component').then((m) => m.HomeScreenComponent),
       },
       {
-        path: 'sports',
+        path: 'connect',
         loadComponent: () =>
-          import('./pages/sports-page.component').then((m) => m.SportsPageComponent),
+          import('./screens/connect-screen.component').then((m) => m.ConnectScreenComponent),
       },
       {
-        path: 'culture',
+        path: 'live',
         loadComponent: () =>
-          import('./pages/culture-page.component').then((m) => m.CulturePageComponent),
+          import('./screens/live-screen.component').then((m) => m.LiveScreenComponent),
       },
       {
-        path: 'rewards',
-        canActivate: [authGuard],
+        path: 'jambaar',
         loadComponent: () =>
-          import('./pages/rewards-page.component').then((m) => m.RewardsPageComponent),
+          import('./screens/jambaar-screen.component').then((m) => m.JambaarScreenComponent),
       },
       {
-        path: 'explore',
+        path: 'marketplace',
         loadComponent: () =>
-          import('./pages/explore-page.component').then((m) => m.ExplorePageComponent),
+          import('./screens/marketplace-screen.component').then(
+            (m) => m.MarketplaceScreenComponent,
+          ),
       },
       {
         path: 'profile',
-        canActivate: [authGuard],
         loadComponent: () =>
-          import('./pages/profile-page.component').then((m) => m.ProfilePageComponent),
+          import('./screens/profile-screen.component').then((m) => m.ProfileScreenComponent),
+      },
+      {
+        path: 'heritage',
+        loadComponent: () =>
+          import('./screens/heritage-screen.component').then((m) => m.HeritageScreenComponent),
       },
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'feed',
+        redirectTo: 'home',
+      },
+    ],
+  },
+  {
+    path: 'app',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/home',
+      },
+      {
+        path: 'home',
+        pathMatch: 'full',
+        redirectTo: '/home',
+      },
+      {
+        path: 'feed',
+        pathMatch: 'full',
+        redirectTo: '/home',
+      },
+      {
+        path: 'explore',
+        pathMatch: 'full',
+        redirectTo: '/marketplace',
+      },
+      {
+        path: 'sports',
+        pathMatch: 'full',
+        redirectTo: '/live',
+      },
+      {
+        path: 'culture',
+        pathMatch: 'full',
+        redirectTo: '/heritage',
+      },
+      {
+        path: 'rewards',
+        pathMatch: 'full',
+        redirectTo: '/jambaar',
+      },
+      {
+        path: 'profile',
+        pathMatch: 'full',
+        redirectTo: '/profile',
+      },
+      {
+        path: 'login',
+        pathMatch: 'full',
+        redirectTo: '/splash',
+      },
+      {
+        path: '**',
+        redirectTo: '/home',
       },
     ],
   },
   {
     path: '**',
-    redirectTo: 'app/feed',
+    redirectTo: 'splash',
   },
 ];
