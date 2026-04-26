@@ -132,7 +132,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
       .app-shell {
         position: relative;
         min-height: 100vh;
-        padding: 0.5rem 0 7.5rem;
+        padding: 0 0 7.5rem;
         background:
           radial-gradient(circle at 8% 0%, rgba(255, 107, 0, 0.08), transparent 18%),
           radial-gradient(circle at 88% 10%, rgba(255, 200, 0, 0.08), transparent 20%),
@@ -187,7 +187,7 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         grid-template-columns: minmax(280px, 0.32fr) minmax(0, 1fr);
         gap: 1rem;
         align-items: start;
-        padding-top: 0.5rem;
+        padding-top: 0;
       }
 
       .desktop-rail {
@@ -417,6 +417,8 @@ import { UiIconComponent } from '../../shared/ui-icon.component';
         }
 
         .shell-grid {
+          width: 100%;
+          margin-inline: 0;
           grid-template-columns: 1fr;
         }
 

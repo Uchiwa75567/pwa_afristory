@@ -14,7 +14,7 @@ import { UiIconComponent } from '../shared/ui-icon.component';
   imports: [RouterLink, UiIconComponent],
   template: `
     <section class="home-screen">
-      <section class="hero card">
+      <section class="hero">
         <div class="hero-top">
           <a class="hero-user profile-link" routerLink="/profile" aria-label="Voir le profil personnel">
             <span class="hero-avatar">
@@ -187,7 +187,9 @@ import { UiIconComponent } from '../shared/ui-icon.component';
         padding: 1rem;
         background: linear-gradient(180deg, #ff6b00 0%, #ff7108 58%, #ff6200 100%);
         color: #fff;
-        border-radius: 30px;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
       }
 
       .hero::before,
